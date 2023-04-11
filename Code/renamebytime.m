@@ -2,8 +2,11 @@ function renamebytime(file_path, file_extension)
     if nargin == 1
         file_extension = '.JPG';
     end
+    
+    cwd = pwd;
+    cd(file_path);
 
-    nowfolder = [file_path, '\*', file_extension];
+    nowfolder = char([file_path, '\*', file_extension]);
     img = dir(nowfolder);
     
     for i = 1:length(img)
@@ -16,7 +19,7 @@ function renamebytime(file_path, file_extension)
         % Check if filename repeats
         a = 1;
         while isfile(new_name)
-            new_name = [filename, '_', a, '.JPG'];
+            new_name = [filename, '_', num2str(a), '.JPG'];
             a = a + 1;
         end
 
@@ -24,4 +27,6 @@ function renamebytime(file_path, file_extension)
         eval(['!rename' 32 origin_name 32 new_name]);
 
     end
+
+    cd(cwd);
 end
